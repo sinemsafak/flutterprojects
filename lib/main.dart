@@ -67,7 +67,7 @@ class MyApp extends StatelessWidget {
                       backgroundImage: NetworkImage("https://cdn.pixabay.com/photo/2023/11/01/11/12/hallstatt-8357170_1280.jpg"),
                     ),
                     title: Text(students[index].firstname+" "+students[index].lastname),
-                    subtitle: Text("Sınavdan aldığı not: "+students[index].grade.toString()),
+                    subtitle: Text("Sınavdan aldığı not: "+students[index].grade.toString()+" ["+students[index].getStatus+"]"),
                     trailing: buildStatusIcon(students[index].grade),
                     onTap: (){
                       print(students[index].firstname+" "+students[index].lastname);
