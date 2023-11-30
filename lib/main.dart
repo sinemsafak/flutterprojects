@@ -7,11 +7,18 @@ void main() {
   ));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   final String mesaj;
   MyApp({required this.mesaj});
-  List<Student> students = [Student("Sinem", "Şafak",25),Student("Kerem", "Varış",65),Student("Halil", "Duymaz",45)];
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  String seciliOgrenci="abc";
+
+  List<Student> students = [Student("Sinem", "Şafak",25),Student("Kerem", "Varış",65),Student("Halil", "Duymaz",45)];
 
   var ogrenciler = [
     "Sinem Şafak",
@@ -25,7 +32,7 @@ class MyApp extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
-           title: Text(mesaj),
+           title: Text(widget.mesaj),
         ),
            body: buildBody(context),
     );
@@ -70,10 +77,16 @@ class MyApp extends StatelessWidget {
                     subtitle: Text("Sınavdan aldığı not: "+students[index].grade.toString()+" ["+students[index].getStatus+"]"),
                     trailing: buildStatusIcon(students[index].grade),
                     onTap: (){
-                      print(students[index].firstname+" "+students[index].lastname);
+                      setState(() { //yeniden çizme sağlanır
+                        seciliOgrenci = students[index].firstname+" "+students[index].lastname;
+                      });
+                      
+                      print(seciliOgrenci);
+                      
                     },
                   );
                 })),
+        Text("Seçili Öğrenci:"+seciliOgrenci), 
         Center(
           child: ElevatedButton(
             child: Text("Sonucu Göster!!"),
