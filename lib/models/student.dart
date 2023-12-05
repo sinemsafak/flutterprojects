@@ -1,36 +1,41 @@
-class Student{
-  String firstname="";
-  String lastname="";
-  int grade=0;
-  String _status="";
+class Student {
+  int id = 0; // Başlangıç değeri atanmış
 
+  String firstname = "";
+  String lastname = "";
+  int grade = 0;
+  String _status = "";
 
-  Student(String firstname, String lastname, int grade){
-    this.firstname=firstname;
-    this.lastname=lastname;
-    this.grade=grade;
-    
-
-  }
-  String get getFirstName{
-    return "OGR -"+this.firstname;
+  Student.withId(int id, String firstname, String lastname, int grade) {
+    this.id = id;
+    this.firstname = firstname;
+    this.lastname = lastname;
+    this.grade = grade;
   }
 
-  void set setFirstName(String value){
-    this.firstname=value;
+  Student(String firstname, String lastname, int grade) {
+    this.firstname = firstname;
+    this.lastname = lastname;
+    this.grade = grade;
   }
 
-  String  get getStatus{
-       String message= "";
+  String get getFirstName {
+    return "OGR -" + this.firstname;
+  }
+
+  void set setFirstName(String value) {
+    this.firstname = value;
+  }
+
+  String get getStatus {
+    String message = "";
     if (this.grade >= 50) {
-       message = "geçti";
+      message = "geçti";
     } else if (this.grade >= 40) {
-       message = "bütünlemeye kaldı";
+      message = "bütünlemeye kaldı";
     } else {
-       message = "kaldı";
+      message = "kaldı";
     }
-         return message;
+    return message;
   }
-
-
 }

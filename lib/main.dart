@@ -17,21 +17,13 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String seciliOgrenci = "abc";
+  Student selectedStudent=Student.withId(0,"","",0);
 
   List<Student> students = [
-    Student("Sinem", "Şafak", 25),
-    Student("Kerem", "Varış", 65),
-    Student("Halil", "Duymaz", 45)
+    Student.withId(1,"Sinem", "Şafak", 25),
+    Student.withId(2,"Kerem", "Varış", 65),
+    Student.withId(3,"Halil", "Duymaz", 45)
   ];
-
-  var ogrenciler = [
-    "Sinem Şafak",
-    "Engin Demiroğ",
-    "Berkay Bilgin",
-    "Murat Kurtboğan"
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,24 +34,12 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  String sinavHesapla(int puan) {
-    String mesaj2 = "";
-    if (puan >= 50) {
-      mesaj2 = "geçti";
-    } else if (puan >= 40) {
-      mesaj2 = "bütünlemeye kaldı";
-    } else {
-      mesaj2 = "kaldı";
-    }
-    return mesaj2;
-  }
-
   void mesajGoster(BuildContext context, String mesaj2) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Sınav Sonucu"),
+          title: Text("İşlem Sonucu"),
           content: Text(mesaj2),
         );
       },
@@ -90,16 +70,14 @@ class _MyAppState extends State<MyApp> {
                     onTap: () {
                       setState(() {
                         //yeniden çizme sağlanır
-                        seciliOgrenci = students[index].firstname +
-                            " " +
-                            students[index].lastname;
+                        selectedStudent = students[index];
                       });
 
-                      print(seciliOgrenci);
+                      print(selectedStudent.firstname);
                     },
                   );
                 })),
-        Text("Seçili Öğrenci:" + seciliOgrenci),
+        Text("Seçili Öğrenci:" + selectedStudent.firstname),
         Row(
           children: <Widget>[
             Flexible(
@@ -119,7 +97,7 @@ class _MyAppState extends State<MyApp> {
                   ],
                 ),
                 onPressed: () {
-                  var mesaj = sinavHesapla(85);
+                  var mesaj = "Eklendi";
                   mesajGoster(context, mesaj);
                 },
               ),
@@ -141,7 +119,7 @@ class _MyAppState extends State<MyApp> {
                   ],
                 ),
                 onPressed: () {
-                  var mesaj = sinavHesapla(85);
+                  var mesaj = "Güncellendi";
                   mesajGoster(context, mesaj);
                 },
               ),
@@ -159,11 +137,14 @@ class _MyAppState extends State<MyApp> {
                         color: Colors.blueGrey,
                       ),
                     ),
-                    Text("Silme"),
+                    Text("Sil"),
                   ],
                 ),
                 onPressed: () {
-                  var mesaj = sinavHesapla(85);
+                  setState(() {
+                     students.remove(selectedStudent);
+                  });
+                  var mesaj = "Silindi"+selectedStudent.firstname;
                   mesajGoster(context, mesaj);
                 },
               ),
