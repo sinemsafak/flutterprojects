@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutterprojects/models/student.dart';
+import 'package:flutterprojects/screens/student_add.dart';
 
 void main() {
   String mesaj = "Öğrenci Takip Sistemi";
@@ -97,8 +98,8 @@ class _MyAppState extends State<MyApp> {
                   ],
                 ),
                 onPressed: () {
-                  var mesaj = "Eklendi";
-                  mesajGoster(context, mesaj);
+                  //navigator.push yardımı ile yeni sayfaya geçisi sağlıyoruz student_add.dart dosyamızdan referans alıyoruz.
+                 Navigator.push(context, MaterialPageRoute(builder: (context)=>StudentAdd())); 
                 },
               ),
             ),
