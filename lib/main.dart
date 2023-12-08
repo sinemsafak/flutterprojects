@@ -18,13 +18,14 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  Student selectedStudent=Student.withId(0,"","",0);
+  Student selectedStudent = Student.withId(0, "", "", 0);
 
   List<Student> students = [
-    Student.withId(1,"Sinem", "Şafak", 25),
-    Student.withId(2,"Kerem", "Varış", 65),
-    Student.withId(3,"Halil", "Duymaz", 45)
+    Student.withId(1, "Sinem", "Şafak", 25),
+    Student.withId(2, "Kerem", "Varış", 65),
+    Student.withId(3, "Halil", "Duymaz", 45)
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,33 +52,34 @@ class _MyAppState extends State<MyApp> {
     return Column(
       children: <Widget>[
         Expanded(
-            child: ListView.builder(
-                itemCount: students.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return ListTile(
-                    leading: CircleAvatar(
-                      backgroundImage: NetworkImage(
-                          "https://cdn.pixabay.com/photo/2023/11/01/11/12/hallstatt-8357170_1280.jpg"),
-                    ),
-                    title: Text(students[index].firstname +
-                        " " +
-                        students[index].lastname),
-                    subtitle: Text("Sınavdan aldığı not: " +
-                        students[index].grade.toString() +
-                        " [" +
-                        students[index].getStatus +
-                        "]"),
-                    trailing: buildStatusIcon(students[index].grade),
-                    onTap: () {
-                      setState(() {
-                        //yeniden çizme sağlanır
-                        selectedStudent = students[index];
-                      });
+          child: ListView.builder(
+            itemCount: students.length,
+            itemBuilder: (BuildContext context, int index) {
+              return ListTile(
+                leading: CircleAvatar(
+                  backgroundImage: NetworkImage(
+                      "https://cdn.pixabay.com/photo/2023/11/01/11/12/hallstatt-8357170_1280.jpg"),
+                ),
+                title: Text(students[index].firstname +
+                    " " +
+                    students[index].lastname),
+                subtitle: Text("Sınavdan aldığı not: " +
+                    students[index].grade.toString() +
+                    " [" +
+                    students[index].getStatus +
+                    "]"),
+                trailing: buildStatusIcon(students[index].grade),
+                onTap: () {
+                  setState(() {
+                    selectedStudent = students[index];
+                  });
 
-                      print(selectedStudent.firstname);
-                    },
-                  );
-                })),
+                  print(selectedStudent.firstname);
+                },
+              );
+            },
+          ),
+        ),
         Text("Seçili Öğrenci:" + selectedStudent.firstname),
         Row(
           children: <Widget>[
@@ -98,8 +100,10 @@ class _MyAppState extends State<MyApp> {
                   ],
                 ),
                 onPressed: () {
-                  //navigator.push yardımı ile yeni sayfaya geçisi sağlıyoruz student_add.dart dosyamızdan referans alıyoruz.
-                 Navigator.push(context, MaterialPageRoute(builder: (context)=>StudentAdd())); 
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => StudentAdd()));
                 },
               ),
             ),
@@ -143,9 +147,9 @@ class _MyAppState extends State<MyApp> {
                 ),
                 onPressed: () {
                   setState(() {
-                     students.remove(selectedStudent);
+                    students.remove(selectedStudent);
                   });
-                  var mesaj = "Silindi"+selectedStudent.firstname;
+                  var mesaj = "Silindi" + selectedStudent.firstname;
                   mesajGoster(context, mesaj);
                 },
               ),

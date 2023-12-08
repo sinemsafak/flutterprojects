@@ -1,6 +1,5 @@
 class Student {
-  int id = 0; // Başlangıç değeri atanmış
-
+  int id = 0;
   String firstname = "";
   String lastname = "";
   int grade = 0;
@@ -18,6 +17,8 @@ class Student {
     this.lastname = lastname;
     this.grade = grade;
   }
+
+  Student.withoutInfo() {}
 
   String get getFirstName {
     return "OGR -" + this.firstname;
