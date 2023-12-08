@@ -3,7 +3,7 @@ import 'package:flutterprojects/models/student.dart';
 import 'package:flutterprojects/validation/student_validatior.dart';
 
 class StudentAdd extends StatefulWidget {
-  const StudentAdd({super.key});
+  const StudentAdd({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -13,6 +13,7 @@ class StudentAdd extends StatefulWidget {
 
 class _StudentAddState extends State<StudentAdd> with StudentValidationMixin {
   var student = Student.withoutInfo();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +24,7 @@ class _StudentAddState extends State<StudentAdd> with StudentValidationMixin {
       body: Container(
         margin: const EdgeInsets.all(20.0),
         child: Form(
+          key: _formKey,
           child: Column(
             children: <Widget>[
               TextFormField(
@@ -31,10 +33,23 @@ class _StudentAddState extends State<StudentAdd> with StudentValidationMixin {
                   hintText: "Sinem",
                 ),
                 validator: validateFirstName,
-                onSaved: (String value) {
-                  student.firstname = value;
+                onSaved: (String? value) {
+                  if (value != null) {
+                    student.firstname = value.trim();
+                  }
                 },
-              )
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  if (_formKey.currentState?.validate() ?? false) {
+                    _formKey.currentState?.save();
+                    // Burada form başarıyla onaylandı, istediğiniz işlemleri gerçekleştirebilirsiniz.
+                    // Örneğin, öğrenciyi bir listeye ekleyebilir veya başka bir işlem yapabilirsiniz.
+                  }
+                },
+                child: const Text("Kaydet"),
+              ),
             ],
           ),
         ),

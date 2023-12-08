@@ -3,15 +3,13 @@ import 'package:flutterprojects/models/student.dart';
 import 'package:flutterprojects/screens/student_add.dart';
 
 void main() {
-  String mesaj = "Öğrenci Takip Sistemi";
-  runApp(MaterialApp(
-    home: MyApp(mesaj: mesaj),
+  runApp(const MaterialApp(
+    home: MyApp(),
   ));
 }
 
 class MyApp extends StatefulWidget {
-  final String mesaj;
-  const MyApp({super.key, required this.mesaj});
+  const MyApp({super.key});
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -21,16 +19,16 @@ class _MyAppState extends State<MyApp> {
   Student selectedStudent = Student.withId(0, "", "", 0);
 
   List<Student> students = [
-    Student.withId(1, "Sinem", "Şafak", 25),
+    Student.withId(1, "Sinem", "Şafak", 50),
     Student.withId(2, "Kerem", "Varış", 65),
-    Student.withId(3, "Halil", "Duymaz", 45)
+    Student.withId(3, "Halil", "Duymaz", 45),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.mesaj),
+        title: const Text("Öğrenci Takip Sistemi"),
       ),
       body: buildBody(context),
     );
@@ -77,80 +75,49 @@ class _MyAppState extends State<MyApp> {
         Text("Seçili Öğrenci:${selectedStudent.firstname}"),
         Row(
           children: <Widget>[
-            Flexible(
-              fit: FlexFit.tight,
-              flex: 1,
-              child: ElevatedButton(
-                child: Row(
-                  children: <Widget>[
-                    const Icon(Icons.add),
-                    SizedBox(
-                      width: 5.0,
-                      child: Container(
-                        color: Colors.amberAccent,
-                      ),
-                    ),
-                    const Text("Yeni Öğrenci"),
-                  ],
-                ),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const StudentAdd()));
-                },
-              ),
-            ),
-            Flexible(
-              fit: FlexFit.tight,
-              flex: 1,
-              child: ElevatedButton(
-                child: Row(
-                  children: <Widget>[
-                    const Icon(Icons.update),
-                    SizedBox(
-                      width: 5.0,
-                      child: Container(
-                        color: Colors.blue,
-                      ),
-                    ),
-                    const Text("Güncelle"),
-                  ],
-                ),
-                onPressed: () {
-                  var mesaj = "Güncellendi";
-                  mesajGoster(context, mesaj);
-                },
-              ),
-            ),
-            Flexible(
-              fit: FlexFit.tight,
-              flex: 1,
-              child: ElevatedButton(
-                child: Row(
-                  children: <Widget>[
-                    const Icon(Icons.delete),
-                    SizedBox(
-                      width: 5.0,
-                      child: Container(
-                        color: Colors.blueGrey,
-                      ),
-                    ),
-                    const Text("Sil"),
-                  ],
-                ),
-                onPressed: () {
-                  setState(() {
-                    students.remove(selectedStudent);
-                  });
-                  var mesaj = "Silindi${selectedStudent.firstname}";
-                  mesajGoster(context, mesaj);
-                },
-              ),
-            )
+            buildButton("Yeni Öğrenci", Icons.add, Colors.amberAccent, () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const StudentAdd()),
+              );
+            }),
+            buildButton("Güncelle", Icons.update, Colors.blue, () {
+              var mesaj = "Güncellendi";
+              mesajGoster(context, mesaj);
+            }),
+            buildButton("Sil", Icons.delete, Colors.blueGrey, () {
+              setState(() {
+                students.remove(selectedStudent);
+              });
+              var mesaj = "Silindi${selectedStudent.firstname}";
+              mesajGoster(context, mesaj);
+            }),
           ],
-        )
+        ),
       ],
+    );
+  }
+
+  Widget buildButton(String text, IconData icon, Color color, Function() onPressed) {
+    return Flexible(
+      fit: FlexFit.tight,
+      flex: 1,
+      child: ElevatedButton(
+        onPressed: onPressed,
+        child: Row(
+          children: <Widget>[
+            Icon(icon),
+            SizedBox(
+              width: 5.0,
+              height: 10.0,
+              child: Container(
+                color: color,
+              ),
+            ),
+            Text(text),
+          ],
+        ),
+      ),
     );
   }
 
