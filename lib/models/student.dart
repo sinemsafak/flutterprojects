@@ -3,7 +3,7 @@ class Student {
   String firstname = "";
   String lastname = "";
   int grade = 0;
-  String _status = "";
+  final String _status = "";
 
   Student.withId(int id, String firstname, String lastname, int grade) {
     this.id = id;
@@ -18,21 +18,21 @@ class Student {
     this.grade = grade;
   }
 
-  Student.withoutInfo() {}
+  Student.withoutInfo();
 
   String get getFirstName {
-    return "OGR -" + this.firstname;
+    return "OGR -$firstname";
   }
 
-  void set setFirstName(String value) {
-    this.firstname = value;
+  set setFirstName(String value) {
+    firstname = value;
   }
 
   String get getStatus {
     String message = "";
-    if (this.grade >= 50) {
+    if (grade >= 50) {
       message = "geçti";
-    } else if (this.grade >= 40) {
+    } else if (grade >= 40) {
       message = "bütünlemeye kaldı";
     } else {
       message = "kaldı";

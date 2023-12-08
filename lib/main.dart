@@ -11,7 +11,7 @@ void main() {
 
 class MyApp extends StatefulWidget {
   final String mesaj;
-  MyApp({required this.mesaj});
+  const MyApp({super.key, required this.mesaj});
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -41,7 +41,7 @@ class _MyAppState extends State<MyApp> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("İşlem Sonucu"),
+          title: const Text("İşlem Sonucu"),
           content: Text(mesaj2),
         );
       },
@@ -56,18 +56,12 @@ class _MyAppState extends State<MyApp> {
             itemCount: students.length,
             itemBuilder: (BuildContext context, int index) {
               return ListTile(
-                leading: CircleAvatar(
+                leading: const CircleAvatar(
                   backgroundImage: NetworkImage(
                       "https://cdn.pixabay.com/photo/2023/11/01/11/12/hallstatt-8357170_1280.jpg"),
                 ),
-                title: Text(students[index].firstname +
-                    " " +
-                    students[index].lastname),
-                subtitle: Text("Sınavdan aldığı not: " +
-                    students[index].grade.toString() +
-                    " [" +
-                    students[index].getStatus +
-                    "]"),
+                title: Text("${students[index].firstname} ${students[index].lastname}"),
+                subtitle: Text("Sınavdan aldığı not: ${students[index].grade} [${students[index].getStatus}]"),
                 trailing: buildStatusIcon(students[index].grade),
                 onTap: () {
                   setState(() {
@@ -80,7 +74,7 @@ class _MyAppState extends State<MyApp> {
             },
           ),
         ),
-        Text("Seçili Öğrenci:" + selectedStudent.firstname),
+        Text("Seçili Öğrenci:${selectedStudent.firstname}"),
         Row(
           children: <Widget>[
             Flexible(
@@ -89,21 +83,21 @@ class _MyAppState extends State<MyApp> {
               child: ElevatedButton(
                 child: Row(
                   children: <Widget>[
-                    Icon(Icons.add),
+                    const Icon(Icons.add),
                     SizedBox(
                       width: 5.0,
                       child: Container(
                         color: Colors.amberAccent,
                       ),
                     ),
-                    Text("Yeni Öğrenci"),
+                    const Text("Yeni Öğrenci"),
                   ],
                 ),
                 onPressed: () {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => StudentAdd()));
+                          builder: (context) => const StudentAdd()));
                 },
               ),
             ),
@@ -113,14 +107,14 @@ class _MyAppState extends State<MyApp> {
               child: ElevatedButton(
                 child: Row(
                   children: <Widget>[
-                    Icon(Icons.update),
+                    const Icon(Icons.update),
                     SizedBox(
                       width: 5.0,
                       child: Container(
                         color: Colors.blue,
                       ),
                     ),
-                    Text("Güncelle"),
+                    const Text("Güncelle"),
                   ],
                 ),
                 onPressed: () {
@@ -135,21 +129,21 @@ class _MyAppState extends State<MyApp> {
               child: ElevatedButton(
                 child: Row(
                   children: <Widget>[
-                    Icon(Icons.delete),
+                    const Icon(Icons.delete),
                     SizedBox(
                       width: 5.0,
                       child: Container(
                         color: Colors.blueGrey,
                       ),
                     ),
-                    Text("Sil"),
+                    const Text("Sil"),
                   ],
                 ),
                 onPressed: () {
                   setState(() {
                     students.remove(selectedStudent);
                   });
-                  var mesaj = "Silindi" + selectedStudent.firstname;
+                  var mesaj = "Silindi${selectedStudent.firstname}";
                   mesajGoster(context, mesaj);
                 },
               ),
@@ -162,11 +156,11 @@ class _MyAppState extends State<MyApp> {
 
   Widget buildStatusIcon(int grade) {
     if (grade >= 50) {
-      return Icon(Icons.done);
+      return const Icon(Icons.done);
     } else if (grade >= 40) {
-      return Icon(Icons.album);
+      return const Icon(Icons.album);
     } else {
-      return Icon(Icons.clear);
+      return const Icon(Icons.clear);
     }
   }
 }

@@ -5,4 +5,4 @@ class StudentValidationMixin{
       return "İsim en az iki karakterli olmalıdır.";
     }
   }
-}
+} 
