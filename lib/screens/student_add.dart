@@ -3,17 +3,24 @@ import 'package:flutterprojects/models/student.dart';
 import 'package:flutterprojects/validation/student_validatior.dart';
 
 class StudentAdd extends StatefulWidget {
-  const StudentAdd({Key? key}) : super(key: key);
-
+  List<Student> students;
+  StudentAdd(List<Student> students){
+    this.students=students;
+  }
   @override
   State<StatefulWidget> createState() {
-    return _StudentAddState();
+    return _StudentAddState(students);
   }
 }
 
 class _StudentAddState extends State<StudentAdd> with StudentValidationMixin {
+   List<Student> students;
   var student = Student.withoutInfo();
-  final _formKey = GlobalKey<FormState>();
+  var formKey = GlobalKey<FormState>();
+
+   _StudentAddState(List<Student> students){
+    this.students=students;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,36 +31,84 @@ class _StudentAddState extends State<StudentAdd> with StudentValidationMixin {
       body: Container(
         margin: const EdgeInsets.all(20.0),
         child: Form(
-          key: _formKey,
+          key: formKey,
           child: Column(
             children: <Widget>[
-              TextFormField(
-                decoration: const InputDecoration(
-                  labelText: "Öğrenci Adı: ",
-                  hintText: "Sinem",
-                ),
-                validator: validateFirstName,
-                onSaved: (String? value) {
-                  if (value != null) {
-                    student.firstname = value.trim();
-                  }
-                },
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState?.validate() ?? false) {
-                    _formKey.currentState?.save();
-                    // Burada form başarıyla onaylandı, istediğiniz işlemleri gerçekleştirebilirsiniz.
-                    // Örneğin, öğrenciyi bir listeye ekleyebilir veya başka bir işlem yapabilirsiniz.
-                  }
-                },
-                child: const Text("Kaydet"),
-              ),
+              buildFirstNameField(),
+              buildLastNameField(),
+              buildGradeField(), 
+              buildSubmitButton(),
             ],
           ),
         ),
       ),
     );
   }
+
+  Widget buildFirstNameField() {
+    return TextFormField(
+      decoration: const InputDecoration(
+        labelText: "Öğrenci Adı: ",
+        hintText: "Sinem",
+      ),
+      validator: validateFirstName,
+      onSaved: (String? value) {
+        if (value != null) {
+          student.firstname = value.trim();
+        }
+      },
+    );
+  }
+
+  Widget buildLastNameField() {
+    return TextFormField(
+      decoration: const InputDecoration(
+        labelText: "Öğrenci Soyadı: ",
+        hintText: "Şafak",
+      ),
+      validator: validateLastName,
+      onSaved: (String? value) {
+        if (value != null) {
+          student.lastname = value.trim();
+        }
+      },
+    );
+  }
+
+  Widget buildGradeField() {
+    return TextFormField(
+      decoration: const InputDecoration(
+        labelText: "Aldığı Not: ",
+        hintText: "65",
+      ),
+      validator: validateFirstName, // Burada doğru validator'u kullanmalısınız (validateGrade?)
+      onSaved: (String? value) {
+        if (value != null) {
+          student.grade = int.parse(value.trim());
+        }
+      },
+    );
+
+  }
+ Widget buildSubmitButton() {
+  return ElevatedButton(
+    onPressed: () {
+      if (formKey.currentState?.validate() ?? false) {
+        formKey.currentState?.save();
+        students.add(student);
+        saveStudent();
+        Navigator.pop(context);
+
+      }
+    },
+    child: const Text("Kaydet"),
+  );
+}
+
+  void saveStudent() {
+    print(student.firstname);
+    print(student.lastname);
+    print(student.grade);
+  }
+
 }

@@ -19,7 +19,7 @@ class _MyAppState extends State<MyApp> {
   Student selectedStudent = Student.withId(0, "", "", 0);
 
   List<Student> students = [
-    Student.withId(1, "Sinem", "Şafak", 50),
+    Student.withId(1, "Sinem", "Şafak", 40),
     Student.withId(2, "Kerem", "Varış", 65),
     Student.withId(3, "Halil", "Duymaz", 45),
   ];
@@ -78,7 +78,7 @@ class _MyAppState extends State<MyApp> {
             buildButton("Yeni Öğrenci", Icons.add, Colors.amberAccent, () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const StudentAdd()),
+                MaterialPageRoute(builder: (context) => StudentAdd(students)),
               );
             }),
             buildButton("Güncelle", Icons.update, Colors.blue, () {
@@ -108,7 +108,7 @@ class _MyAppState extends State<MyApp> {
           children: <Widget>[
             Icon(icon),
             SizedBox(
-              width: 5.0,
+              width: 4.0,
               height: 10.0,
               child: Container(
                 color: color,
