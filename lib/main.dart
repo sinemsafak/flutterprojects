@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutterprojects/models/student.dart';
 import 'package:flutterprojects/screens/student_add.dart';
+import 'package:flutterprojects/screens/student_edit.dart';
 
 void main() {
   runApp(const MaterialApp(
@@ -82,8 +83,7 @@ class _MyAppState extends State<MyApp> {
               );
             }),
             buildButton("Güncelle", Icons.update, Colors.blue, () {
-              var mesaj = "Güncellendi";
-              mesajGoster(context, mesaj);
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>StudentEdit(selectedStudent)));
             }),
             buildButton("Sil", Icons.delete, Colors.blueGrey, () {
               setState(() {

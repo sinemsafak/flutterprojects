@@ -16,13 +16,9 @@ mixin StudentValidationMixin {
     return null; // Geçerli durumu belirtmek için null döndürün.
   }
   String? validateGrade(String? value) {
-    if (value == null || value.isEmpty) {
-      return "Not boş olamaz.";
-    }
-    var grade = int.tryParse(value);
-    if (grade == null || grade <= 0 || grade > 100) {
+    var grade =int.parse(value!);
+    if (grade <=0 || grade>100) {
       return "Girilen not değeri 0 ile 100 arasında olmalıdır.";
-    }
-    return null; // Geçerli durumu belirtmek için null döndürün.
   }
+}
 }
