@@ -3,7 +3,7 @@ import 'package:flutterprojects/models/student.dart';
 import 'package:flutterprojects/validation/student_validatior.dart';
 
 class StudentAdd extends StatefulWidget {
-  List<Student> students;
+  List<Student> students=[];
   StudentAdd(List<Student> students){
     this.students=students;
   }
@@ -14,7 +14,7 @@ class StudentAdd extends StatefulWidget {
 }
 
 class _StudentAddState extends State<StudentAdd> with StudentValidationMixin {
-   List<Student> students;
+   List<Student> students=[];
   var student = Student.withoutInfo();
   var formKey = GlobalKey<FormState>();
 
@@ -81,7 +81,7 @@ class _StudentAddState extends State<StudentAdd> with StudentValidationMixin {
         labelText: "Aldığı Not: ",
         hintText: "65",
       ),
-      validator: validateFirstName, // Burada doğru validator'u kullanmalısınız (validateGrade?)
+      validator: validateGrade, // Burada doğru validator'u kullanmalısınız (validateGrade?)
       onSaved: (String? value) {
         if (value != null) {
           student.grade = int.parse(value.trim());
